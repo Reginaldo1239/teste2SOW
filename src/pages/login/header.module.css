@@ -1,0 +1,5 @@
+ .header{
+     width: 100%;
+     background-color: var(--background-gray-ligther);
+     padding: 20px 0;
+ }
