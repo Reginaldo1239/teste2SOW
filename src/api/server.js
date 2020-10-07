@@ -13,7 +13,7 @@ return new Promise( async (resolver,reject)=>{
           // 'token':await readData('token')
         },
         body: JSON.stringify(body)
-      }).then(async(data)=>resolver({status:data.status,data:await data.json()})).catch((error)=>{      throw error}) 
+      }).then(async(data)=>resolver({status:data.status,data:await data.json()})).catch((error)=>{throw error}) 
 
 })
 } 
@@ -27,7 +27,7 @@ export const get = async (endPoint) =>{
             'Content-Type': 'application/json',
          //   'token':await readData('token')
          },
-          }).then((data)=> resolver({status:data.status,data:data.json()} ))
+          }).then(async(data)=> resolver({status:data.status,headers:data.headers,data: await data.json()} ))
           .catch((error)=>{
               throw error
           })
@@ -46,7 +46,7 @@ export const del =  (endpoint,body)=>{
          //   'token':await readData('token')
          },
           body: JSON.stringify(body)
-        }).then((data)=>resolver({status:data.status,data:data.json()}))
+        }).then(async(data)=>resolver({status:data.status,data:await data.json()}))
     })
 }
 export const put = async (endPoint,body)=>{
@@ -59,7 +59,7 @@ export const put = async (endPoint,body)=>{
      //   'token':await readData('token')
      },
       body:JSON.stringify(body)
-    }).then((data)=>resolver({status:data.status,data:data.json()})).catch((error)=>{
+    }).then(async(data)=>resolver({status:data.status,data:await data.json()})).catch((error)=>{
         throw error
     }
         

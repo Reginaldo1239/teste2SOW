@@ -4,6 +4,9 @@
 .header{
     padding: 10px 0;
 }
+.ButtonModal{
+    margin: 10px 0;
+}
 .close{
     color:red;
     float: right;

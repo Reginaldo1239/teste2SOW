@@ -2,10 +2,11 @@ import React, { useState,useEffect } from 'react';
 import Style from './formEmploye.module.css';
 import { Button, Header, Image, Modal,Form ,Input,Message} from 'semantic-ui-react'
 import {getAdress} from '../../api/adressApi';
-import {minLength,emailValid,numberValid, cepValid} from '../../util/validation';
-import {post} from '../../api/server';
+import {minLength,emailValid,numberValid, cepValid,validFormatCpf} from '../../util/validation';
+import {post, put} from '../../api/server';
 
 export default function FormEmploye(props){
+    let {infoUserToUpdate} = props;
     const [modalVisible,setModalVisible] = useState(false);
     const [name,setName] = useState('');
     const [cpf,setCpf] = useState('');
@@ -24,9 +25,26 @@ export default function FormEmploye(props){
     const [numberError,setNumberError] = useState(false);
     const [neighborhoodError,setNeighborhoodError] = useState(false);
     const [cityError,setCityError] = useState(false);
-    const inputIsEmpty = 'o campo está vázio';
-    useEffect(()=>{
 
+    const [submitedForm,setSubmitedForm] = useState(false);
+    const inputIsEmpty = 'o campo está vázio';
+
+    useEffect(()=>{
+            if(infoUserToUpdate!=false){
+                setModalVisible(true);
+                console.log('infoUserToUpdate')
+               setName(infoUserToUpdate.name);
+               setCpf(infoUserToUpdate.cpf);
+               setEmail(infoUserToUpdate.email);
+               setCep(infoUserToUpdate.cep);
+               setStreet(infoUserToUpdate.street);
+               setNumber(infoUserToUpdate.number);
+               setNeighborhood(infoUserToUpdate.neighborhood);
+               setCity(infoUserToUpdate.city);
+
+            }
+    },[infoUserToUpdate])
+    useEffect(()=>{
             let formatCep = cep.replace('-','');
             if(formatCep.length===8){
             getAdress(formatCep).then((res)=>{
@@ -42,7 +60,10 @@ export default function FormEmploye(props){
     },[cep]);
 
     const submitForm = async()=>{
+        console.log('validForm()' )
+        console.log(await validForm())
         if(validForm()){
+            setSubmitedForm(true);
             let body = {
                 name,
                 cpf,
@@ -53,85 +74,76 @@ export default function FormEmploye(props){
                 neighborhood,
                 city
             };
+
+            // verifica se o props infoUserToUpdate === false se for defirente é para atualizar as informações do usuário
+    if(infoUserToUpdate===false){
+        body.id = Date.now();
          let resultInsert = await  post('usuarios',body);
-         console.log(resultInsert)
+            if(resultInsert.status===201){
+                props.newInsert(body);
+                setSubmitedForm(false);
+                setModalVisible(false);
+            }
+        }else{
+            body.id = infoUserToUpdate.id;
+            put(`usuarios/${body.id}`,body).then((res)=>{
+                if(res.status===200){
+                    props.userUpdated(body);
+                    setSubmitedForm(false);
+                    setModalVisible(false);
+                }
+            })
         }
+      
+        }
+        setName('');
+        setCpf('');
+        setEmail('');
+        setCpf('');
+        setStreet('');
+        setNumber('');
+        setNeighborhood('');
+        setCity('');
     }
 
-    const validForm =()=>{
-        clearErrors();
-  
-        let errors = [];
-            if(!minLength(name,1)){
-                setNameError(inputIsEmpty);
-                errors.push({name:inputIsEmpty})
-            }
-            if(!minLength(cpf,1)){
-                setCpfError(inputIsEmpty);
-                errors.push({cpf:inputIsEmpty});
-
-            }
-            if(!minLength(email,1)){
-                setEmailError(inputIsEmpty);
-                errors.push({email:inputIsEmpty})
-            }else if(!emailValid(email)){
-                setEmailError('email invalido');
-                errors.push({email:'o email invalido'});
-            }
-            if(!minLength(cep,1)){
-                setCepError(inputIsEmpty);
-                errors.push({cep:inputIsEmpty});
-            }
-            if(!minLength(street,1)){
-                setStreetError(inputIsEmpty);
-                errors.push({street:inputIsEmpty});
-            }
-            if(!minLength(number,1)){
-                setNumberError(inputIsEmpty);
-                errors.push({number:inputIsEmpty});
-            }else if(! /^\d*$/.test(number)){
-                setNumberError('o número invalid');
-                errors.push({number:'o número invalid'});
-            }
-            if(!minLength(neighborhood,1)){
-                setNeighborhoodError(inputIsEmpty);
-                errors.push({neighborhood:inputIsEmpty});
-            }
-            if(!minLength(city,1)){
-                setCityError(inputIsEmpty);
-                errors.push({city:inputIsEmpty})
-            }
-            return errors.length===0;
+    const validForm = ()=>{
+        let inputName,inputCpf,inputEmail,inputCep,inputStreet,inputNumber,inputNeighborhood,inputCity;
+        inputName = validateName(name);
+        inputCpf = validateCpf(cpf);
+        inputEmail= validateEmail(email);
+        inputCep = validateCep(cep);
+        inputStreet= validateStreet(street)
+        inputNumber = validateNumber(number);
+        inputNeighborhood = validateNeighborhood(neighborhood);
+        inputCity = validateCity(city);
+    
+    return inputName && inputCpf && inputEmail && inputCep && inputStreet && inputNumber && inputNeighborhood && inputCity;
     }
+
+
     const handleName = (event)=>{
         let name = event.currentTarget.value;
-        setName(name)
-        !minLength(name,1) ? setNameError(inputIsEmpty):setNameError(false);
+        setName(name);
+        validateName(name);
     };
+  
     const handleCpf = (event)=>{
         let cpf = event.currentTarget.value;
         if(event.nativeEvent.inputType=='deleteContentBackward'){
              setCpf(cpf);
          }
-         setCpf(cpf.replace(/^(\d{3})(\d{3})(\d{3})$/g,"$1.$2.$3-"));   
-        //validação
-        if(!minLength(cpf,1)){
-            setCpfError(inputIsEmpty);
-        }else{
-            setCpfError(false);
-        }
+         if(validFormatCpf(cpf)){
+            setCpf(cpf.replace(/^(\d{3})(\d{3})(\d{3})$/g,"$1.$2.$3-"));
+         }
+         validateCpf(cpf);
     }
+  
     const handleEmail =(event)=>{
         let email = event.currentTarget.value;
         setEmail(email);
-        if(!minLength(email,1)){
-            setEmailError(inputIsEmpty);
-        }else if(!emailValid(email)){
-            setEmailError('email invalido');
-        }else{
-            setEmailError(false);
-        }
+        validateEmail(email);
     }
+ 
     const handleCep =(event)=>{
         let  cep = event.currentTarget.value;
         if(event.nativeEvent.inputType=='deleteContentBackward'){
@@ -139,81 +151,137 @@ export default function FormEmploye(props){
         }else if(cepValid(cep)){
           setCep(cep.replace(/^(\d{5})(\d{0,3})$/,"$1-"));
         }
-        //validar cep
-        if(!minLength(cep,1)){
-            setCepError(inputIsEmpty);
-        }else{
-            setCepError(false)
-        }
+        validateCep(cep);
     }
+
     const handleStreet = (event)=>{
         let street = event.currentTarget.value;
         setStreet(street);
-        ! minLength(street,1)?setStreetError(inputIsEmpty):setStreetError(false);
+        validateStreet(street);
     }
+
     const handleNumber = (event) =>{
         let number = event.currentTarget.value;
          if(numberValid(number)){
              setNumber(number);
-             !minLength(number,1)?setNumberError(inputIsEmpty):setNumberError(false);
+             validateNumber(number);
            }
     }
     const handleNeighborhood = (event)=>{
         let neighborhood = event.currentTarget.value;
-        !minLength(neighborhood,1)?setNeighborhoodError(inputIsEmpty):setNeighborhoodError(false);
+        setNeighborhood(neighborhood);
+        validateNeighborhood(neighborhood);
     }
+ 
     const handleCity = (event)=>{
         let city = event.currentTarget.value;
-        !minLength(city,1)?setCityError(inputIsEmpty):setCityError(false);
+        setCity(city);
+        validateCity(city);
     }
-  const  clearErrors = ()=>{
-        setNameError(false);
-        setCpfError(false);
-        setEmailError(false);
-        setStreetError(false);
-        setNumberError(false);
-        setNeighborhoodError(false);
-        setCityError(false);
-    }
-    const handlerCpf = (event)=>{
-       let value = event.currentTarget.value;
-       if(event.nativeEvent.inputType=='deleteContentBackward'){
-            setCpf(value);
-        }else if(   /^(\d{0,3})([.]{0,1})(\d{0,3})([.]{0,1})(\d(0,3)([.]{0,1})([-]{0,1})(\d{0,2})  )/g.test(value)   ){
-       // setCpf(value.replace(/^(\d{0,3})([.]{0,1})(\d{0,3})([.]{0,1})(\d(0,3)([.]{0,1})([-]{0,1})(\d{0,2})$/,"$1.$2.$3-");
-    
-        }
-        setCpf(value.replace(/^(\d{3})(\d{3})(\d{3})$/g,"$1.$2.$3-"));
-    }
-    const handlerCep =(event)=>{
-      let  value = event.currentTarget.value;
-        if(event.nativeEvent.inputType=='deleteContentBackward'){
-            setCep(value)
-        }else if(/^(\d{0,5})([-]{0,1})(\d{0,3})$/g.test(value)){
-        setCep(value.replace(/^(\d{5})(\d{0,3})$/,"$1-"))
-        }
-    }
+ 
+
     
     const fillAdress  =(adress)=>{
         let {logradouro,bairro,localidade} = adress;
         setStreet(logradouro);
         setNeighborhood(bairro);
         setCity(localidade);
+        validateStreet(logradouro);
+        validateNeighborhood(bairro);
+        validateCity(localidade);
     }
-
+    const validateName=(name)=>{
+        if(!minLength(name,1)){
+                setNameError(inputIsEmpty);
+                return false;
+        }else{
+            setNameError(false);
+            return true;
+        }
+        }
+        const validateCpf = (cpf)=>{
+            if(!minLength(cpf,1)){
+                setCpfError(inputIsEmpty);
+                return false;
+            }else{
+                setCpfError(false);
+                return true;
+            }
+        }
+        const validateEmail = (email)=>{
+            if(!minLength(email,1)){
+                setEmailError(inputIsEmpty);
+                return false;
+            }else if(!emailValid(email)){
+                setEmailError('email invalido');
+                return false;
+            }else{
+                setEmailError(false);
+                return true;
+            }
+        }
+    
+        const validateCep = (cep)=>{
+            if(!minLength(cep,1)){
+                setCepError(inputIsEmpty);
+                return false;
+            }else{
+                setCepError(false)
+                return true;
+            }
+        }
+        const validateStreet = (street)=>{
+            if(!minLength(street,1)){
+                setStreetError(inputIsEmpty);
+                return false;
+            }else {
+                setStreetError(false);
+                return true;
+            }
+        }
+        const validateNumber = (number)=>{
+            if( !minLength(number,1)){
+                setNumberError(inputIsEmpty);
+                return false;
+            }else {
+                setNumberError(false);
+                return true;
+            }
+        }
+        const validateNeighborhood = (neighborhood)=>{
+           // !minLength(neighborhood,1)?setNeighborhoodError(inputIsEmpty):setNeighborhoodError(false);
+            if( !minLength(neighborhood,1)){
+                setNeighborhoodError(inputIsEmpty);
+                return false;
+            }else{
+                setNeighborhoodError(false);
+                return true;
+            }
+        }
+        const validateCity = (city)=>{
+            if( ! minLength(city,1)){
+                setCityError(inputIsEmpty)
+                return false;
+            }else{
+                setCityError(false)
+                return true;
+            }
+        }
     return(
         <Modal
         onClose={() => setModalVisible(false)}
         onOpen={() => setModalVisible(true)}
         open={modalVisible}
-        trigger={ <Button onClick={()=>setModalVisible(true)}>novo</Button>}
+        trigger={ < div className={Style.ButtonModal}  > <Button onClick={()=>setModalVisible(true)}>novo</Button></div>}
       >
         <div className={Style.container}>
             <div className={Style.close} onClick={()=>setModalVisible(false)}>
                 X
             </div>
             <div className="clear"></div>
-          <Form>
+          <Form
+          loading={submitedForm}
+          >
                 <header className={Style.header}>
                     <h2>novo usuário</h2>
                 </header>
@@ -285,8 +353,6 @@ export default function FormEmploye(props){
  
         </Form>
           </div>
-       
-
       </Modal>
     )
 }
