@@ -1,9 +1,6 @@
 import fetch from 'cross-fetch';
 
-const BASEURL = ' http://localhost:5000';
-
- 
-
+const BASEURL = 'http://localhost:5000/';
 
 export const post=  (endPoint,body)=>{
   console.log(endPoint)
@@ -13,10 +10,10 @@ return new Promise( async (resolver,reject)=>{
         headers:{
            Accept: 'application/json',
            'Content-Type': 'application/json',
-           'token':await readData('token')
+          // 'token':await readData('token')
         },
         body: JSON.stringify(body)
-      }).then((data)=>resolver({status:data.status,data:data.json()})).catch((error)=>{      throw error}) 
+      }).then(async(data)=>resolver({status:data.status,data:await data.json()})).catch((error)=>{      throw error}) 
 
 })
 } 
@@ -28,7 +25,7 @@ export const get = async (endPoint) =>{
           headers:{
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            'token':await readData('token')
+         //   'token':await readData('token')
          },
           }).then((data)=> resolver({status:data.status,data:data.json()} ))
           .catch((error)=>{
@@ -46,7 +43,7 @@ export const del =  (endpoint,body)=>{
           headers:{
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            'token':await readData('token')
+         //   'token':await readData('token')
          },
           body: JSON.stringify(body)
         }).then((data)=>resolver({status:data.status,data:data.json()}))
@@ -59,10 +56,10 @@ export const put = async (endPoint,body)=>{
       headers:{
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'token':await readData('token')
+     //   'token':await readData('token')
      },
       body:JSON.stringify(body)
-    }).then((data)=>resolver({status:data.status,data:data.json()})).catch((e)=>{
+    }).then((data)=>resolver({status:data.status,data:data.json()})).catch((error)=>{
         throw error
     }
         

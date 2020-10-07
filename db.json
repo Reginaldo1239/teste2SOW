@@ -1,5 +1,48 @@
 {
-    "usuarios": [
-        
-    ]
-  }
+  "usuarios": [
+    {
+      "name": "reginaldo",
+      "cpf": "442.500.608-96",
+      "email": "reginaldo.melo56@gmail.com",
+      "cep": "04851-722",
+      "street": "Rua Santa Paula",
+      "number": "1",
+      "neighborhood": "Jardim Prainha",
+      "city": "São Paulo",
+      "id": 1
+    },
+    {
+      "name": "reginaldo",
+      "cpf": "442.500.608-97",
+      "email": "reginaldo.melo56@gmail.com",
+      "cep": "04851-722",
+      "street": "Rua Santa Paula",
+      "number": "1",
+      "neighborhood": "Jardim Prainha",
+      "city": "São Paulo",
+      "id": 2
+    },
+    {
+      "name": "reginaldo",
+      "cpf": "442.500.608-97",
+      "email": "reginaldo.melo56@gmail.com",
+      "cep": "04851-722",
+      "street": "Rua Santa Paula",
+      "number": "1",
+      "neighborhood": "Jardim Prainha",
+      "city": "São Paulo",
+      "id": 3
+    },
+    {
+      "name": "reginaldo",
+      "cpf": "442.500.608-97",
+      "email": "reginaldo.melo56@gmail.com",
+      "cep": "04851-722",
+      "street": "Rua Santa Paula",
+      "number": "1",
+      "neighborhood": "Jardim Prainha",
+      "city": "São Paulo",
+      "id": 4
+    }
+  ]
+}

@@ -2,7 +2,8 @@ import React, { useState,useEffect } from 'react';
 import Style from './formEmploye.module.css';
 import { Button, Header, Image, Modal,Form ,Input,Message} from 'semantic-ui-react'
 import {getAdress} from '../../api/adressApi';
-import {minLength,emailValid} from '../../util/validation';
+import {minLength,emailValid,numberValid, cepValid} from '../../util/validation';
+import {post} from '../../api/server';
 
 export default function FormEmploye(props){
     const [modalVisible,setModalVisible] = useState(false);
@@ -15,8 +16,6 @@ export default function FormEmploye(props){
     const [neighborhood,setNeighborhood] = useState('');
     const [city,setCity]=useState('');
 
-    const [msgError,setMsgError]=useState([]);
-
     const [nameError,setNameError] = useState(false);
     const [cpfError,setCpfError] = useState(false);
     const [emailError,setEmailError] = useState(false);
@@ -25,10 +24,9 @@ export default function FormEmploye(props){
     const [numberError,setNumberError] = useState(false);
     const [neighborhoodError,setNeighborhoodError] = useState(false);
     const [cityError,setCityError] = useState(false);
+    const inputIsEmpty = 'o campo está vázio';
     useEffect(()=>{
-        let a = "04851722";
-        a = a.replace(/(\d{5})?(\d{3})/,"$1-");
-        console.log(a)
+
             let formatCep = cep.replace('-','');
             if(formatCep.length===8){
             getAdress(formatCep).then((res)=>{
@@ -43,57 +41,130 @@ export default function FormEmploye(props){
         }
     },[cep]);
 
-    const submitForm =()=>{
+    const submitForm = async()=>{
         if(validForm()){
-
+            let body = {
+                name,
+                cpf,
+                email,
+                cep,
+                street,
+                number,
+                neighborhood,
+                city
+            };
+         let resultInsert = await  post('usuarios',body);
+         console.log(resultInsert)
         }
     }
 
     const validForm =()=>{
         clearErrors();
-        const emptyMsg = 'o campo está vázio';
-        
+  
         let errors = [];
             if(!minLength(name,1)){
-                setNameError(emptyMsg);
-                errors.push({name:emptyMsg})
+                setNameError(inputIsEmpty);
+                errors.push({name:inputIsEmpty})
             }
             if(!minLength(cpf,1)){
-                setCpfError(emptyMsg);
-                errors.push({cpf:emptyMsg});
+                setCpfError(inputIsEmpty);
+                errors.push({cpf:inputIsEmpty});
 
             }
             if(!minLength(email,1)){
-                setEmailError(emptyMsg);
-                errors.push({email:emptyMsg})
+                setEmailError(inputIsEmpty);
+                errors.push({email:inputIsEmpty})
             }else if(!emailValid(email)){
                 setEmailError('email invalido');
                 errors.push({email:'o email invalido'});
             }
             if(!minLength(cep,1)){
-                setCepError(emptyMsg);
-                errors.push({cep:emptyMsg});
+                setCepError(inputIsEmpty);
+                errors.push({cep:inputIsEmpty});
             }
             if(!minLength(street,1)){
-                setStreetError(emptyMsg);
-                errors.push({street:emptyMsg});
+                setStreetError(inputIsEmpty);
+                errors.push({street:inputIsEmpty});
             }
             if(!minLength(number,1)){
-                setNumberError(emptyMsg);
-                errors.push({number:emptyMsg});
-            }else if(!/\^d*$/.test(number)){
+                setNumberError(inputIsEmpty);
+                errors.push({number:inputIsEmpty});
+            }else if(! /^\d*$/.test(number)){
                 setNumberError('o número invalid');
                 errors.push({number:'o número invalid'});
             }
             if(!minLength(neighborhood,1)){
-                setNeighborhoodError(emptyMsg);
-                errors.push({neighborhood:emptyMsg});
+                setNeighborhoodError(inputIsEmpty);
+                errors.push({neighborhood:inputIsEmpty});
             }
             if(!minLength(city,1)){
-                setCityError(emptyMsg);
-                errors.push({city:emptyMsg})
+                setCityError(inputIsEmpty);
+                errors.push({city:inputIsEmpty})
             }
             return errors.length===0;
+    }
+    const handleName = (event)=>{
+        let name = event.currentTarget.value;
+        setName(name)
+        !minLength(name,1) ? setNameError(inputIsEmpty):setNameError(false);
+    };
+    const handleCpf = (event)=>{
+        let cpf = event.currentTarget.value;
+        if(event.nativeEvent.inputType=='deleteContentBackward'){
+             setCpf(cpf);
+         }
+         setCpf(cpf.replace(/^(\d{3})(\d{3})(\d{3})$/g,"$1.$2.$3-"));   
+        //validação
+        if(!minLength(cpf,1)){
+            setCpfError(inputIsEmpty);
+        }else{
+            setCpfError(false);
+        }
+    }
+    const handleEmail =(event)=>{
+        let email = event.currentTarget.value;
+        setEmail(email);
+        if(!minLength(email,1)){
+            setEmailError(inputIsEmpty);
+        }else if(!emailValid(email)){
+            setEmailError('email invalido');
+        }else{
+            setEmailError(false);
+        }
+    }
+    const handleCep =(event)=>{
+        let  cep = event.currentTarget.value;
+        if(event.nativeEvent.inputType=='deleteContentBackward'){
+            setCep(cep);
+        }else if(cepValid(cep)){
+          setCep(cep.replace(/^(\d{5})(\d{0,3})$/,"$1-"));
+        }
+        //validar cep
+        if(!minLength(cep,1)){
+            setCepError(inputIsEmpty);
+        }else{
+            setCepError(false)
+        }
+    }
+    const handleStreet = (event)=>{
+        let street = event.currentTarget.value;
+        setStreet(street);
+        ! minLength(street,1)?setStreetError(inputIsEmpty):setStreetError(false);
+    }
+    const handleNumber = (event) =>{
+        let number = event.currentTarget.value;
+         if(numberValid(number)){
+             setNumber(number);
+             !minLength(number,1)?setNumberError(inputIsEmpty):setNumberError(false);
+           }
+    }
+    const handleNeighborhood = (event)=>{
+        let neighborhood = event.currentTarget.value;
+        !minLength(neighborhood,1)?setNeighborhoodError(inputIsEmpty):setNeighborhoodError(false);
+    }
+    const handleCity = (event)=>{
+        let city = event.currentTarget.value;
+        !minLength(city,1)?setCityError(inputIsEmpty):setCityError(false);
     }
   const  clearErrors = ()=>{
         setNameError(false);
@@ -142,21 +213,21 @@ export default function FormEmploye(props){
                 X
             </div>
             <div className="clear"></div>
-          <Form error={msgError.length>0}>
+          <Form>
                 <header className={Style.header}>
                     <h2>novo usuário</h2>
                 </header>
                 <Form.Group widths='equal'>
                         <Form.Input 
                         value={name}
-                        onChange={(event)=>setName(event.currentTarget.value)}
+                        onChange={async(event)=>{ handleName(event)}}
                         fluid 
                         label='nome'
                         error={nameError}
                         />
                         <Form.Input
                         value={cpf}
-                        onChange={(event)=>handlerCpf(event)}
+                        onChange={(event)=>handleCpf(event)}
                         fluid 
                         label='cpf'
                         error={cpfError}
@@ -164,29 +235,30 @@ export default function FormEmploye(props){
                  </Form.Group>
                          <Form.Input 
                          value={email}
-                         onChange={(event)=>setEmail(event.currentTarget.value)}
+                         onChange={(event)=>handleEmail(event)}
                          fluid label='email'
-                         error={emailError}  />
-                 <Form.Input 
-                 className={Style.inputCep}
-                 value={cep }
-                 onChange={(event)=>handlerCep(event)}
-                 fluid 
-                 label='cep'
-                 error={cepError}
-                 />
+                         error={emailError} 
+                         />
+                        <Form.Input 
+                        className={Style.inputCep}
+                        value={cep }
+                        onChange={(event)=>handleCep(event)}
+                        fluid 
+                        label='cep'
+                        error={cepError}
+                        />
                  <Form.Group >
                         <Form.Input  
                         className={Style.inputStreet} 
                         value={street}
-                        onChange={(event)=>setStreet(event.currentTarget.value)}
+                        onChange={(event)=>handleStreet(event)}
                         fluid 
                         label='rua'
                         error={streetError} />
                         <Form.Input  
                         className={Style.inputNumber} 
                         value={number}
-                        onChange={(event)=>setNumber(event.currentTarget.value)}
+                        onChange={(event)=>handleNumber(event)}
                         fluid 
                         label='nº'
                         error={numberError} />
@@ -195,14 +267,14 @@ export default function FormEmploye(props){
                         <Form.Input  
                         className={Style.inputNeighborhood}
                         value={neighborhood}
-                        onChange={(event)=>setNeighborhood(event.currentTarget.value)}
+                        onChange={(event)=>handleNeighborhood(event)}
                         fluid 
                         label='bairro'
                         error={neighborhoodError} />
                         <Form.Input  
                         className={Style.inputCity} 
                         value={city}
-                        onChange={(event)=>setCity(event.currentTarget.value)}
+                        onChange={(event)=>handleCity(event)}
                         fluid 
                         label='cidade'
                         error={cityError} />
@@ -210,16 +282,7 @@ export default function FormEmploye(props){
                  <Button
                  onClick={()=>submitForm()}
                  >salvar</Button>
-                 <Message
-      error
-      header={'erro'}
-      content={()=><>
-      <p>123</p>
-      <p>123</p>
-      <p>123</p>
-      </>}
-
-    />
+ 
         </Form>
           </div>
        
