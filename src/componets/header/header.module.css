@@ -6,14 +6,40 @@
     background-color:var(--background-gray-ligther);
     padding: 20px 0;
 } 
-.center{
+
+.container{
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
     max-width: var( --max-width-page);
 }
-
+.li{
+    float: left;
+    margin: 8px 5px;
+    color:black;
+}
+.li a{
+    color:black;
+}
+.li a:hover{
+    text-decoration: underline;
+}
+.span{
+    display: block;
+    margin: 8px 0px;
+}
 .span:hover{
     cursor: pointer;
     text-decoration: underline;
 }
+
+
+@media (max-width: 576px) { 
+
+  }
+  
+  
+  @media (max-width: 768px) { 
+ 
+  }
+  

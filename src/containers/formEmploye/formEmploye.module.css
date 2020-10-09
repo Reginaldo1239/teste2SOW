@@ -1,0 +1,72 @@
+.container{
+    max-width: 800px;
+    margin: 100px auto;
+    
+}
+
+.form{
+    padding: 20px;
+    background-color: var(--background-gray-ligther); 
+}
+.header{
+    padding: 5px 0;
+}
+
+
+.inputCep{
+    padding-top: 5px 0;
+    width: 20%;
+}
+.inputStreet{
+    padding-top: 5px 0;
+    width: 90%;
+}
+.inputNumber{ 
+    padding-top: 5px 0;
+    width: 10%;
+}
+.inputNeighborhood{
+    padding-top: 5px 0;
+    width: 50%;
+} 
+.inputCity{
+    padding-top: 5px 0;
+    width: 50%;
+}
+.button{
+    padding: 15px 0;
+}
+
+  
+@media (max-width: 576px) { 
+    .container{
+        margin: 100px 20px;
+    }
+    .inputCep{
+        width: 30%;
+    }
+    .inputStreet{
+        width: 80%;
+    }
+    .inputNumber{ 
+        width: 20%;
+    }
+}
+
+
+@media (max-width: 768px) { 
+    .container{
+        margin: 100px 20px;
+    }
+    .inputCep{
+        width: 30%;
+    }
+    .inputStreet{
+        width: 80%;
+    }
+    .inputNumber{ 
+        width: 20%;
+    }
+}
+
+  

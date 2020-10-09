@@ -8,4 +8,21 @@
     padding: 20px;
     background-color: #F8F8F8;
     border-radius: 15px;
+
 }
+
+@media (max-width: 576px) { 
+    .container{
+        width: 90%;
+        max-width: 576px;
+    }
+ }
+
+
+@media (max-width: 768px) { 
+    .container{
+        width: 80%;
+      
+    }
+ }
+
