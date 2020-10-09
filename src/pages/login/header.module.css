@@ -3,3 +3,21 @@
      background-color: var(--background-gray-ligther);
      padding: 20px 0;
  }
+
+ @media (max-width: 576px) { 
+    .header{
+        width: 100%;
+        background-color: var(--background-gray-ligther);
+        padding: 20px 0;
+    }
+ }
+
+
+@media (max-width: 768px) { 
+    .header{
+        width: 100%;
+        background-color: var(--background-gray-ligther);
+        padding: 20px 0;
+    }
+ }
+

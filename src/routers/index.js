@@ -25,10 +25,7 @@ export default  function Routers (){
                     <Route   path={'/user/:userId'} component={EditEmploye}  />
                     <Route exact  path={'/user'}  component={NewUser}/>
                 </RoutersPrivate>
-        
             </Switch>
         </Router>
-      
-      
     )
 }

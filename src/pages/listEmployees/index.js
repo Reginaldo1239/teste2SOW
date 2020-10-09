@@ -1,6 +1,6 @@
 import React from  'react';
 import Header from '../../componets/header';
-import List from './list'
+import List from './main'
 import Footer from '../../componets/footer';
 import Style from './index.module.css';
 import Center from '../../componets/center';

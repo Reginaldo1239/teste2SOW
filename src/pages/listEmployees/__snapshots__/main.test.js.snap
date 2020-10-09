@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a message 1`] = `
+<div
+  className="container"
+>
+  <div
+    className="container"
+  >
+    <div
+      className="ui icon input input"
+    >
+      <input
+        onChange={[Function]}
+        placeholder="buscar"
+        type="text"
+      />
+      <i
+        aria-hidden="true"
+        className="search circular link icon"
+        onClick={[Function]}
+      />
+    </div>
+  </div>
+  <div
+    className="list"
+  >
+    <div
+      className="ui inverted dimmer"
+      onClick={[Function]}
+    >
+      <div
+        className="content"
+      >
+        <div
+          className="ui text loader"
+        >
+          Loading
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="pagination"
+  />
+</div>
+`;

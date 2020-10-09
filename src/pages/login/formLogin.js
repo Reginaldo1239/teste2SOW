@@ -1,10 +1,9 @@
 import React,{useState} from 'react';
 import { useHistory } from "react-router-dom";
-import { Button, Checkbox, Form,Input,Message } from 'semantic-ui-react'
-
-
+import { Form,Input,Message } from 'semantic-ui-react'
 import {checkCredentials} from '../../auth';
 import Style from './formLogin.module.css';
+import Button from '../../componets/button';
 
 export default  function FormLogin(props){
     const [email,setEmail] = useState('');
@@ -16,8 +15,6 @@ export default  function FormLogin(props){
         if(checkCredentials(email,password)){
             setMessageError(false);
             history.push("/");
-
-
         }else{
             setMessageError(true);
         }
@@ -44,7 +41,9 @@ export default  function FormLogin(props){
                         value={password}
                         onChange={(event)=>setPassword(event.currentTarget.value)}>
                     </Form.Field>
-                    <Button type='submit' onClick={()=>submit()} >entrar</Button>
+                    <Button 
+                    content='entrar'
+                    onClick={()=>submit()} />
                     <Message
                         error
                         header='erro'

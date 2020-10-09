@@ -1,21 +1,18 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,createRef } from 'react';
 import {
     BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
     useParams
   } from "react-router-dom";
+import { useToasts } from 'react-toast-notifications'
+import { Form } from 'semantic-ui-react'
 import Style from './formEmploye.module.css';
-import { Button, Header, Image, Modal,Form ,Input,Message} from 'semantic-ui-react'
 import {getAdress} from '../../api/adressApi';
 import {minLength,emailValid,numberValid, cepValid,validFormatCpf} from '../../util/validation';
 import {post, put,get} from '../../api/server';
-import { useToasts } from 'react-toast-notifications'
+import Button from '../../componets/button';
 
  
 export default function FormEmploye(props){
-    let {infoUserToUpdate} = props;
     const [userIdState,setUserIdState]=useState('');
     const [name,setName] = useState('');
     const [cpf,setCpf] = useState('');
@@ -36,6 +33,8 @@ export default function FormEmploye(props){
     const [cityError,setCityError] = useState(false);
 
     const [activeLoadingForm,setActiveLoadingForm] = useState(false);
+
+    const refInputNumber = createRef();
     const inputIsEmpty = 'o campo está vázio';
     let { userId } = useParams();
     const { addToast } = useToasts()
@@ -48,6 +47,9 @@ export default function FormEmploye(props){
     },[userId])
     useEffect(()=>{
         infoCep();
+        if( minLength(cep,9)&&street.length===0 &&number.length===0 && neighborhood.length===0 && city.length===0  ){
+            console.log(refInputNumber.current.focus())
+        }
     },[cep]);
 
  
@@ -59,22 +61,13 @@ export default function FormEmploye(props){
                 if(res.data.erro===true ){
                     setActiveLoadingForm(false)
                     setCepError('cep invalido');  
-                   
                 }else{
                     fillAdress(res.data);
                        setCepError(false); 
                      setActiveLoadingForm(false);
-                  
                 }
             });
         }
-
-    
-       
-        
-
-     
-
     }
 
     const getInfoUser=()=>{
@@ -144,7 +137,6 @@ export default function FormEmploye(props){
                setNeighborhood('');
                setCity('');
         }
-      
         }
     }
     }
@@ -172,8 +164,7 @@ export default function FormEmploye(props){
     };
   
     const handleCpf = (event)=>{
-        let cpf = event.currentTarget.value;
-        
+        let cpf = event.currentTarget.value; 
         if(event.nativeEvent.inputType=='deleteContentBackward'){
              setCpf(cpf);
          }
@@ -183,7 +174,6 @@ export default function FormEmploye(props){
             
             validateCpf(cpf);
         }
-       
     }
   
     const handleEmail =(event)=>{
@@ -199,7 +189,7 @@ export default function FormEmploye(props){
         }else if(cepValid(cep)){
           setCep(cep.replace(/^(\d{5})(\d{0,3})$/,"$1-"));
         }
-     //   validateCep(cep);
+  
     }
 
     const handleStreet = (event)=>{
@@ -227,9 +217,7 @@ export default function FormEmploye(props){
         validateCity(city);
     }
  
-
-    
-    const fillAdress  =(adress)=>{
+  const fillAdress  =(adress)=>{
         let {logradouro,bairro,localidade} = adress;
         setStreet(logradouro);
         setNeighborhood(bairro);
@@ -277,7 +265,6 @@ export default function FormEmploye(props){
                 setCepError(inputIsEmpty);
                 return false;
             }else if(/^(\d{5})([-]{1})(\d{3})$/.test(cep)){
-               
             }else{
                 setCepError(false)
                 return true;
@@ -325,8 +312,7 @@ export default function FormEmploye(props){
         <div className={Style.container}>
           <Form
           loading={activeLoadingForm}
-          className={Style.form}
-          >
+          className={Style.form}>
                 <header className={Style.header}>
                     <h2>novo usuário</h2>
                 </header>
@@ -368,16 +354,21 @@ export default function FormEmploye(props){
                         fluid 
                         label='rua'
                         error={streetError} />
-                        <Form.Input  
-                        className={Style.inputNumber} 
-                        value={number}
-                        onChange={(event)=>handleNumber(event)}
-                        fluid 
-                        label='nº'
-                        error={numberError} />
+                        <Form.Field  
+                          className={Style.inputNumber}>
+                            <label>nº</label>
+                            <input
+                                ref={refInputNumber}
+                                value={number}
+                                onChange={(event)=>handleNumber(event)}
+                                fluid 
+                                label='nº'
+                                error={numberError} />
+                        </Form.Field>  
                  </Form.Group >
                  <Form.Group >
                         <Form.Input  
+                        
                         className={Style.inputNeighborhood}
                         value={neighborhood}
                         onChange={(event)=>handleNeighborhood(event)}
@@ -394,8 +385,9 @@ export default function FormEmploye(props){
                  </Form.Group >
                  <div className={Style.button}>
                     <Button
+                    content='salvar'
                     onClick={()=>submitForm()}
-                    >salvar</Button>
+                    ></Button>
                  </div>
            
  

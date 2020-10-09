@@ -10,7 +10,7 @@ import {
   
   } from "react-router-dom";
 export default function Header(props){
-    const location = useLocation();
+    let location = useLocation();
     let history = useHistory();
 
      const users= React.createRef();
