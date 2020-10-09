@@ -43,13 +43,20 @@
         margin: 100px 20px;
     }
     .inputCep{
-        width: 30%;
+        width: 50%;
     }
     .inputStreet{
         width: 80%;
     }
     .inputNumber{ 
         width: 20%;
+    }
+    .inputNeighborhood{
+        width: 100%;
+    } 
+    .inputCity{
+
+        width: 100%;
     }
 }
 
@@ -59,13 +66,20 @@
         margin: 100px 20px;
     }
     .inputCep{
-        width: 30%;
+        width: 50%;
     }
     .inputStreet{
         width: 80%;
     }
     .inputNumber{ 
         width: 20%;
+    }
+    .inputNeighborhood{
+        width: 100%;
+    } 
+    .inputCity{
+    
+        width: 100%;
     }
 }
 

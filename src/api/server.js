@@ -10,7 +10,6 @@ return new Promise( async (resolver,reject)=>{
         headers:{
            Accept: 'application/json',
            'Content-Type': 'application/json',
-          // 'token':await readData('token')
         },
         body: JSON.stringify(body)
       }).then(async(data)=>resolver({status:data.status,data:await data.json()})).catch((error)=>{throw error}) 
@@ -25,7 +24,6 @@ export const get = async (endPoint) =>{
           headers:{
             Accept: 'application/json',
             'Content-Type': 'application/json',
-         //   'token':await readData('token')
          },
           }).then(async(data)=> resolver({status:data.status,headers:data.headers,data: await data.json()} ))
           .catch((error)=>{
@@ -43,7 +41,6 @@ export const del =  (endpoint,body)=>{
           headers:{
             Accept: 'application/json',
             'Content-Type': 'application/json',
-         //   'token':await readData('token')
          },
           body: JSON.stringify(body)
         }).then(async(data)=>resolver({status:data.status,data:await data.json()}))
@@ -56,7 +53,6 @@ export const put = async (endPoint,body)=>{
       headers:{
         Accept: 'application/json',
         'Content-Type': 'application/json',
-     //   'token':await readData('token')
      },
       body:JSON.stringify(body)
     }).then(async(data)=>resolver({status:data.status,data:await data.json()})).catch((error)=>{

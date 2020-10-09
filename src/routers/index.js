@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-    BrowserRouter as Router,
+    BrowserRouter,
     Switch,
     Route,
     Link,
@@ -17,8 +17,8 @@ import RoutersPrivate from './routersPrivate';
 
 export default  function Routers (){
     return (
-        <Router>
-            <Switch>  
+        <BrowserRouter>
+              <Switch>  
             <Route   path={'/login'} component={Login} />
                 <RoutersPrivate>
                     <Route exact path={'/'}  component={ListEmployyes} />
@@ -26,6 +26,7 @@ export default  function Routers (){
                     <Route exact  path={'/user'}  component={NewUser}/>
                 </RoutersPrivate>
             </Switch>
-        </Router>
+      
+        </BrowserRouter>
     )
 }
