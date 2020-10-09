@@ -6,18 +6,12 @@ import Style from './index.module.css';
 import Center from '../../componets/center';
 
 export default function ListEmployees(props){
-  
- 
-
-
     return (
         <div className={Style.listEmployees}>
             <Header></Header>
             <Center>
             <div className={Style.container}>
-            <List
-         
-            ></List>
+            <List></List>
             </div>
             </Center>
             <Footer></Footer>
