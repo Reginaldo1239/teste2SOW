@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/teste2SOW/static/css/main.a7907282.chunk.css",
+    "main.js": "/teste2SOW/static/js/main.86a09e97.chunk.js",
+    "main.js.map": "/teste2SOW/static/js/main.86a09e97.chunk.js.map",
+    "runtime-main.js": "/teste2SOW/static/js/runtime-main.92652cc0.js",
+    "runtime-main.js.map": "/teste2SOW/static/js/runtime-main.92652cc0.js.map",
+    "static/css/2.711cdaec.chunk.css": "/teste2SOW/static/css/2.711cdaec.chunk.css",
+    "static/js/2.85556da6.chunk.js": "/teste2SOW/static/js/2.85556da6.chunk.js",
+    "static/js/2.85556da6.chunk.js.map": "/teste2SOW/static/js/2.85556da6.chunk.js.map",
+    "index.html": "/teste2SOW/index.html",
+    "precache-manifest.21167d789cf5d7cfdf6dfeded72f19d6.js": "/teste2SOW/precache-manifest.21167d789cf5d7cfdf6dfeded72f19d6.js",
+    "service-worker.js": "/teste2SOW/service-worker.js",
+    "static/css/2.711cdaec.chunk.css.map": "/teste2SOW/static/css/2.711cdaec.chunk.css.map",
+    "static/css/main.a7907282.chunk.css.map": "/teste2SOW/static/css/main.a7907282.chunk.css.map",
+    "static/js/2.85556da6.chunk.js.LICENSE.txt": "/teste2SOW/static/js/2.85556da6.chunk.js.LICENSE.txt",
+    "static/media/semantic.min.css": "/teste2SOW/static/media/outline-icons.ef60a4f6.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.92652cc0.js",
+    "static/css/2.711cdaec.chunk.css",
+    "static/js/2.85556da6.chunk.js",
+    "static/css/main.a7907282.chunk.css",
+    "static/js/main.86a09e97.chunk.js"
+  ]
+}
