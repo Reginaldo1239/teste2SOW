@@ -32,7 +32,7 @@ export default function Main(props){
                 setLoadingUsers(false);
                 addToast('ocorreu um erro', { appearance: 'error' });
             }
-        });
+        }); 
     }
     const deleteUser = (id)=>{
         setLoadingUsers(true)

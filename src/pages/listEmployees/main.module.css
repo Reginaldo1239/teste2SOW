@@ -16,17 +16,21 @@
 }
 @media (max-width: 576px) { 
     .list{
-        overflow: scroll;
+        overflow-x: scroll;
     }
-    .employe{
-        display: block;
-        background-color: red;
-        padding: 100px;
-       }
+    .pagination{
+        margin-top: 150px;
+    
+    }
+ 
 }
 
 @media (max-width: 768px) { 
     .list{
-        overflow-x: scroll;
+        overflow-x: scroll;  
+    }
+    .pagination{
+        margin-top: 150px;
+    
     }
 }

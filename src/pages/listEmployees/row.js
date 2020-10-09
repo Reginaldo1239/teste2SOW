@@ -1,7 +1,5 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
-
-
 import Style from './row.module.css';
 import Button from '../../componets/button'
 export default function Row (props){

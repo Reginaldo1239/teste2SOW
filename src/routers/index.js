@@ -1,13 +1,9 @@
 import React from "react";
-
 import {
-    BrowserRouter,
+    BrowserRouter as Router, 
     Switch,
     Route,
-    Link,
-    useParams
   } from "react-router-dom";
-  
 import Login from '../pages/login';
 import ListEmployyes from '../pages/listEmployees';
 import NewUser from '../pages/newEmploye';
@@ -17,8 +13,8 @@ import RoutersPrivate from './routersPrivate';
 
 export default  function Routers (){
     return (
-        <BrowserRouter>
-              <Switch>  
+        <Router>
+            <Switch>  
             <Route   path={'/login'} component={Login} />
                 <RoutersPrivate>
                     <Route exact path={'/'}  component={ListEmployyes} />
@@ -26,7 +22,6 @@ export default  function Routers (){
                     <Route exact  path={'/user'}  component={NewUser}/>
                 </RoutersPrivate>
             </Switch>
-      
-        </BrowserRouter>
+        </Router> 
     )
 }
