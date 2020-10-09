@@ -3,8 +3,10 @@ Projeto desenvolvido com react
 ### `para rodar o projeto`
 <div>clone o repositório</div>
 <div>npm install para instalar as dependencias;</div>
-na raiz do projeto execute, para simular uma api</div>
+na raiz do projeto execute</div>
 <div>json-server --watch db.json --delay 2000 --port 5000</div>
+ <div>para simular uma api</div>
+
 
 <div>no login </div>
 <div>use qualquer email e uma senha com no minimo 4 caracteres para logar;</div>
