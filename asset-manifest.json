@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/teste2SOW/static/css/main.d712f29b.chunk.css",
+    "main.css": "/teste2SOW/static/css/main.a8f3cfaa.chunk.css",
     "main.js": "/teste2SOW/static/js/main.4daf4469.chunk.js",
     "main.js.map": "/teste2SOW/static/js/main.4daf4469.chunk.js.map",
     "runtime-main.js": "/teste2SOW/static/js/runtime-main.92652cc0.js",
@@ -9,10 +9,10 @@
     "static/js/2.51a3a1f2.chunk.js": "/teste2SOW/static/js/2.51a3a1f2.chunk.js",
     "static/js/2.51a3a1f2.chunk.js.map": "/teste2SOW/static/js/2.51a3a1f2.chunk.js.map",
     "index.html": "/teste2SOW/index.html",
-    "precache-manifest.ee54579459e56284864f6ce0fce1ac99.js": "/teste2SOW/precache-manifest.ee54579459e56284864f6ce0fce1ac99.js",
+    "precache-manifest.5e9a52134dca5fd5b3c46afd50531ed2.js": "/teste2SOW/precache-manifest.5e9a52134dca5fd5b3c46afd50531ed2.js",
     "service-worker.js": "/teste2SOW/service-worker.js",
     "static/css/2.711cdaec.chunk.css.map": "/teste2SOW/static/css/2.711cdaec.chunk.css.map",
-    "static/css/main.d712f29b.chunk.css.map": "/teste2SOW/static/css/main.d712f29b.chunk.css.map",
+    "static/css/main.a8f3cfaa.chunk.css.map": "/teste2SOW/static/css/main.a8f3cfaa.chunk.css.map",
     "static/js/2.51a3a1f2.chunk.js.LICENSE.txt": "/teste2SOW/static/js/2.51a3a1f2.chunk.js.LICENSE.txt",
     "static/media/semantic.min.css": "/teste2SOW/static/media/outline-icons.ef60a4f6.woff"
   },
@@ -20,7 +20,7 @@
     "static/js/runtime-main.92652cc0.js",
     "static/css/2.711cdaec.chunk.css",
     "static/js/2.51a3a1f2.chunk.js",
-    "static/css/main.d712f29b.chunk.css",
+    "static/css/main.a8f3cfaa.chunk.css",
     "static/js/main.4daf4469.chunk.js"
   ]
 }
