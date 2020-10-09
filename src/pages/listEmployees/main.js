@@ -1,10 +1,11 @@
 import React,{useState,useEffect} from 'react';
-import Style from './main.module.css';
+import { useToasts } from 'react-toast-notifications'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import {get,del} from '../../api/server';
 import Pagination from '../../componets/pagination';
 import Search from '../../componets/search';
-import Row from './row'
+import Row from './row';
+import Style from './main.module.css';
 export default function Main(props){
   //  let {users,loading} = props;
     const [users,setUsers] = useState([]);
@@ -12,6 +13,7 @@ export default function Main(props){
     const [totalItens,setTotalItens]=useState(0);
     const [loadingUsers,setLoadingUsers]= useState(false);
     const limit =15;
+    const { addToast } = useToasts()
     useEffect(()=>{
         getUsers();
       
@@ -26,6 +28,9 @@ export default function Main(props){
                 setTotalItens(res.headers.map['x-total-count']);
                 setLoadingUsers(false)      
                 return res.data
+            }else{
+                setLoadingUsers(false);
+                addToast('ocorreu um erro', { appearance: 'error' });
             }
         });
     }
