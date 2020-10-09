@@ -3,9 +3,12 @@ Projeto desenvolvido com react
 ### `para rodar o projeto`
 <div>clone o repositório</div>
 <div>npm install para instalar as dependencias;</div>
-na raiz do projeto execute</div>
+<div>na raiz do projeto execute</div>
 <div>json-server --watch db.json --delay 2000 --port 5000</div>
- <div>para simular uma api</div>
+ <div>para simular uma servidor backend</div>
+  <div>rode  </div>
+ <div>npm start </div>
+ <div>para iniciar a aplicação localmente </div>
 
 
 <div>no login </div>
